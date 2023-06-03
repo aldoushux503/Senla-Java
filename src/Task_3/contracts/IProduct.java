@@ -1,4 +1,4 @@
-package Task_3;
+package Task_3.contracts;
 
 public interface IProduct {
     void installFirstPart(IProductPart productPart);
