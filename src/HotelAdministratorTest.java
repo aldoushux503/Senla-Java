@@ -1,4 +1,3 @@
-package Task_4;
 
 public class HotelAdministratorTest {
     public static void main(String[] args) {
@@ -33,10 +32,12 @@ public class HotelAdministratorTest {
         administrator.checkOut(room1);
 
         // Print the room and service details
-        System.out.println("Room 1: Number - " + room1.getRoomNumber() + ", Status - " + room1.getStatus() + ", Price - " + room1.getPrice());
-        System.out.println("Room 2: Number - " + room2.getRoomNumber() + ", Status - " + room2.getStatus() + ", Price - " + room2.getPrice());
-        System.out.println("Service 1: Name - " + service1.getServiceName() + ", Price - " + service1.getPrice());
-        System.out.println("Service 2: Name - " + service2.getServiceName() + ", Price - " + service2.getPrice());
+        for (Room room : administrator.getRooms().values()) {
+            System.out.printf("Room %d: Status - %s, Price - %.1f \n", room.getRoomNumber(), room.getStatus(), room.getPrice());
+        }
+        for (Service service : administrator.getServices().values()) {
+            System.out.printf("Service: Name - %s, Price - %.1f \n", service.getServiceName(), service.getPrice());
+        }
     }
 }
 
