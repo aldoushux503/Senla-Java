@@ -19,13 +19,16 @@ public class CarAssemblyLine implements IAssemblyLine {
     @Override
     public IProduct assembleProduct(IProduct product) {
         System.out.println("Car assembling...");
-        IProductPart firstPart = lineSteps.get(0).buildProductPart();
-        IProductPart secondPart = lineSteps.get(1).buildProductPart();
-        IProductPart thirdPart = lineSteps.get(2).buildProductPart();
 
-        product.installFirstPart(firstPart);
-        product.installSecondPart(secondPart);
-        product.installThirdPart(thirdPart);
+        List<IProductPart> parts = new ArrayList<>();
+        for (ILineStep lineStep : lineSteps) {
+            parts.add(lineStep.buildProductPart());
+
+        }
+
+        product.installFirstPart(parts.get(0));
+        product.installSecondPart(parts.get(1));
+        product.installThirdPart(parts.get(2));
 
         System.out.println("Car assembled.");
         return product;
