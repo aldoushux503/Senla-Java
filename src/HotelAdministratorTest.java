@@ -33,10 +33,10 @@ public class HotelAdministratorTest {
 
         // Print the room and service details
         for (Room room : administrator.getRooms().values()) {
-            System.out.printf("Room %d: Status - %s, Price - %.1f \n", room.getRoomNumber(), room.getStatus(), room.getPrice());
+            System.out.println(room);
         }
         for (Service service : administrator.getServices().values()) {
-            System.out.printf("Service: Name - %s, Price - %.1f \n", service.getServiceName(), service.getPrice());
+            System.out.println(service);
         }
     }
 }

@@ -52,10 +52,6 @@ class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "roomNumber=" + roomNumber +
-                ", status=" + status +
-                ", price=" + price +
-                '}';
+        return "Room %d: Status - %s, Price - %.1f".formatted(this.getRoomNumber(), this.getStatus(), this.getPrice());
     }
 }

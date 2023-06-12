@@ -38,4 +38,9 @@ public class Service {
     public int hashCode() {
         return Objects.hash(serviceName, price);
     }
+
+    @Override
+    public String toString() {
+        return "Service: Name - %s, Price - %.1f".formatted(this.getServiceName(), this.getPrice());
+    }
 }
