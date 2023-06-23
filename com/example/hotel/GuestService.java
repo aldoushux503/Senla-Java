@@ -1,6 +1,8 @@
+package example.hotel;
+
 import java.util.Date;
 
-class GuestService {
+public class GuestService {
     private Service service;
     private Date date;
 

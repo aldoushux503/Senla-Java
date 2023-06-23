@@ -1,3 +1,4 @@
+package example.hotel;
 
 import java.util.*;
 

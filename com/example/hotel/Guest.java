@@ -1,8 +1,10 @@
+package example.hotel;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-class Guest {
+public class Guest {
     private String name;
     private Room room;
     private Date checkOutDate;

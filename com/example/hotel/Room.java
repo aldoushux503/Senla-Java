@@ -1,7 +1,9 @@
+package example.hotel;
+
 import java.util.Date;
 import java.util.Objects;
 
-class Room {
+public class Room {
     private final int roomNumber;
     private RoomStatus status;
     private double price;

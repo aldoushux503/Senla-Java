@@ -1,3 +1,5 @@
+package example.hotel;
+
 import java.util.Objects;
 
 public class Service {
