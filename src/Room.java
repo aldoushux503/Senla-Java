@@ -17,6 +17,15 @@ class Room {
         this.stars = stars;
     }
 
+    public Room(Room room) {
+        this.roomNumber = room.roomNumber;
+        this.status = room.status;
+        this.price = room.price;
+        this.capacity = room.capacity;
+        this.stars = room.stars;
+        this.guest = room.guest;
+    }
+
     public int getRoomNumber() {
         return roomNumber;
     }
