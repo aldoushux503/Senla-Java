@@ -49,7 +49,7 @@ public class HotelAdministrator {
         return new HashMap<>(rooms);
     }
 
-    public Room getRoom(Room room) {
+    public Room findRoom(Room room) {
         return new Room(rooms.get(room.getRoomNumber()));
     }
 
@@ -61,7 +61,7 @@ public class HotelAdministrator {
         return new HashMap<>(services);
     }
 
-    public Service getService(Service service) {
+    public Service findService(Service service) {
         return new Service(services.get(service.getServiceName()));
     }
 

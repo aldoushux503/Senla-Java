@@ -92,7 +92,7 @@ public class HotelTest {
     @Test
     public void testChangeServicePrice() {
         administrator.changeServicePrice(service1, 15.0);
-        assertEquals(15.0, administrator.getService(service1).getPrice());
+        assertEquals(15.0, administrator.findService(service1).getPrice());
     }
 
     @Test
