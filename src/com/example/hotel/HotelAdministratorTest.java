@@ -36,10 +36,10 @@ public class HotelAdministratorTest {
         administrator.checkOut(room1);
 
         // Print the room and service details
-        for (Room room : administrator.getRooms().values()) {
+        for (Room room : administrator.getRooms()) {
             System.out.println(room);
         }
-        for (Service service : administrator.getServices().values()) {
+        for (Service service : administrator.getServices()) {
             System.out.println(service);
         }
 

@@ -45,16 +45,16 @@ public class HotelAdministrator {
         services.putIfAbsent(service.getServiceName(), new Service(service));
     }
 
-    public Map<Integer, Room> getRooms() {
-        return new HashMap<>(rooms);
+    public List<Room> getRooms() {
+        return new ArrayList<>(rooms.values());
     }
 
     public void setRooms(Map<Integer, Room> rooms) {
         this.rooms = new HashMap<>(rooms);
     }
 
-    public Map<String, Service> getServices() {
-        return new HashMap<>(services);
+    public List<Service> getServices() {
+        return new ArrayList<>(services.values());
     }
 
     public Service getServiceDetails(Service service) {
@@ -74,15 +74,15 @@ public class HotelAdministrator {
     }
 
     public List<Room> getRoomsSortedByPrice() {
-        return new RoomPriceSorting(rooms.values()).sortItems();
+        return new RoomPriceSorting(getRooms()).sortItems();
     }
 
     public List<Room> getRoomsSortedByCapacity() {
-        return new RoomCapacitySorting(rooms.values()).sortItems();
+        return new RoomCapacitySorting(getRooms()).sortItems();
     }
 
     public List<Room> getRoomsSortedByStars() {
-        return new RoomStarsSorting(rooms.values()).sortItems();
+        return new RoomStarsSorting(getRooms()).sortItems();
     }
 
     private List<Room> getAvailableRooms() {
@@ -158,11 +158,11 @@ public class HotelAdministrator {
     }
 
     public List<Service> getServicesSortedByCategory() {
-        return new ServiceCategorySorting(services.values()).sortItems();
+        return new ServiceCategorySorting(getServices()).sortItems();
     }
 
     public List<Service> getServicesSortedByPrice() {
-        return new ServicePriceSorting(services.values()).sortItems();
+        return new ServicePriceSorting(getServices()).sortItems();
     }
 
     public Room getRoomDetails(int roomNumber) {

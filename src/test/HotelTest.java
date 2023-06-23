@@ -86,7 +86,7 @@ public class HotelTest {
     public void testAddRoom() {
         Room newRoom = new Room(104, 250.0, 5, 5);
         administrator.addRoom(newRoom);
-        assertEquals(newRoom, administrator.getRooms().get(newRoom.getRoomNumber()));
+        assertEquals(newRoom, administrator.getRoomDetails(newRoom.getRoomNumber()));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class HotelTest {
     public void testAddService() {
         Service newService = new Service("Laundry", 30.0);
         administrator.addService(newService);
-        assertEquals(newService, administrator.getServices().get(newService.getServiceName()));
+        assertEquals(newService, administrator.getServiceDetails(newService));
     }
 
     @Test
