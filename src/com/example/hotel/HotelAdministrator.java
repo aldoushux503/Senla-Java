@@ -2,10 +2,7 @@ package com.example.hotel;
 
 import com.example.hotel.sort.impl.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HotelAdministrator {
@@ -17,6 +14,7 @@ public class HotelAdministrator {
     public HotelAdministrator() {
         this.rooms = new HashMap<>();
         this.services = new HashMap<>();
+        this.guests = new ArrayList<>();
     }
 
     public void checkIn(Room room) {
