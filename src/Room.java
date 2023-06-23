@@ -1,20 +1,20 @@
+import java.util.Date;
 import java.util.Objects;
 
 class Room {
     private final int roomNumber;
     private RoomStatus status;
     private double price;
+    private int capacity;
+    private int stars;
+    private Guest guest;
 
-    public Room(int roomNumber, double price) {
+    public Room(int roomNumber, double price, int capacity, int stars) {
         this.roomNumber = roomNumber;
         this.status = RoomStatus.AVAILABLE;
         this.price = price;
-    }
-
-    public Room(Room room) {
-        this.roomNumber = room.getRoomNumber();
-        this.status = room.getStatus();
-        this.price = room.getPrice();
+        this.capacity = capacity;
+        this.stars = stars;
     }
 
     public int getRoomNumber() {
@@ -36,6 +36,34 @@ class Room {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public Guest getGuest() {
+        return guest;
+    }
+
+    public void setGuest(Guest guest) {
+        this.guest = guest;
+    }
+
+    public boolean isAvailableOnDate(Date date) {
+        if (status != RoomStatus.AVAILABLE) {
+            return false;
+        }
+        if (guest == null) {
+            return true;
+        }
+        Date checkOutDate = guest.getCheckOutDate();
+        return checkOutDate.before(date);
+    }
+
 
     @Override
     public boolean equals(Object o) {
