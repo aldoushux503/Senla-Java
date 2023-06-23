@@ -2,24 +2,19 @@ package example.hotel;
 
 import java.util.Date;
 
-public class GuestService {
-    private Service service;
+public class GuestService extends Service {
     private Date date;
 
     public GuestService(Service service, Date date) {
-        this.service = service;
+        super(service);
         this.date = date;
-    }
-
-    public Service getService() {
-        return service;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public double getPrice() {
-        return service.getPrice();
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

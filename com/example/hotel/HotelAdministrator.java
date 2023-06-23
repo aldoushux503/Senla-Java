@@ -1,6 +1,9 @@
 package example.hotel;
 
+import example.hotel.sort.impl.*;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HotelAdministrator {
     private Map<Integer, Room> rooms;
@@ -57,77 +60,52 @@ public class HotelAdministrator {
         this.services = new HashMap<>(services);
     }
 
+
     public List<Room> getRoomsSortedByPrice() {
-        List<Room> roomList = new ArrayList<>(rooms.values());
-        roomList.sort(Comparator.comparingDouble(Room::getPrice));
-        return roomList;
+        return new RoomPriceSorting(rooms.values()).sortItems();
     }
 
     public List<Room> getRoomsSortedByCapacity() {
-        List<Room> roomList = new ArrayList<>(rooms.values());
-        roomList.sort(Comparator.comparingInt(Room::getCapacity));
-        return roomList;
+        return new RoomCapacitySorting(rooms.values()).sortItems();
     }
 
     public List<Room> getRoomsSortedByStars() {
-        List<Room> roomList = new ArrayList<>(rooms.values());
-        roomList.sort(Comparator.comparingInt(Room::getStars));
-        return roomList;
+        return new RoomStarsSorting(rooms.values()).sortItems();
     }
 
+    private List<Room> getAvailableRooms() {
+        return rooms.values()
+                .stream()
+                .filter(room -> room.getStatus() == RoomStatus.AVAILABLE)
+                .toList();
+    }
 
     public List<Room> getAvailableRoomsSortedByPrice() {
-        List<Room> availableRooms = new ArrayList<>();
-        for (Room room : rooms.values()) {
-            if (room.getStatus() == RoomStatus.AVAILABLE) {
-                availableRooms.add(room);
-            }
-        }
-        availableRooms.sort(Comparator.comparingDouble(Room::getPrice));
-        return availableRooms;
+        List<Room> availableRooms = getAvailableRooms();
+        return new RoomPriceSorting(getAvailableRooms()).sortItems();
     }
 
     public List<Room> getAvailableRoomsSortedByCapacity() {
-        List<Room> availableRooms = new ArrayList<>();
-        for (Room room : rooms.values()) {
-            if (room.getStatus() == RoomStatus.AVAILABLE) {
-                availableRooms.add(room);
-            }
-        }
-        availableRooms.sort(Comparator.comparingInt(Room::getCapacity));
-        return availableRooms;
+        List<Room> availableRooms = getAvailableRooms();
+        return new RoomCapacitySorting(availableRooms).sortItems();
     }
 
     public List<Room> getAvailableRoomsSortedByStars() {
-        List<Room> availableRooms = new ArrayList<>();
-        for (Room room : rooms.values()) {
-            if (room.getStatus() == RoomStatus.AVAILABLE) {
-                availableRooms.add(room);
-            }
-        }
-        availableRooms.sort(Comparator.comparingInt(Room::getStars));
-        return availableRooms;
+        List<Room> availableRooms = getAvailableRooms();
+        return new RoomStarsSorting(availableRooms).sortItems();
     }
 
+
     public List<Guest> getGuestsSortedAlphabetically() {
-        List<Guest> sortedGuests = new ArrayList<>(guests);
-        sortedGuests.sort(Comparator.comparing(Guest::getName));
-        return sortedGuests;
+        return new GuestAlphabeticallySorting(guests).sortItems();
     }
 
     public List<Guest> getGuestsSortedByCheckOutDate() {
-        List<Guest> sortedGuests = new ArrayList<>(guests);
-        sortedGuests.sort(Comparator.comparing(Guest::getCheckOutDate));
-        return sortedGuests;
+        return new GuestCheckOutDateSorting(guests).sortItems();
     }
+
     public int getTotalAvailableRooms() {
-        int count = 0;
-        for (Room room : rooms.values()) {
-            if (room.getStatus() == RoomStatus.AVAILABLE) {
-                count++;
-            }
-        }
-        return count;
+        return getAvailableRooms().size();
     }
 
     public int getTotalGuests() {
@@ -135,51 +113,39 @@ public class HotelAdministrator {
     }
 
     public List<Room> getAvailableRoomsOnDate(Date date) {
-        List<Room> availableRooms = new ArrayList<>();
-        for (Room room : rooms.values()) {
-            if (room.isAvailableOnDate(date)) {
-                availableRooms.add(room);
-            }
-        }
-        return availableRooms;
+        return getAvailableRooms()
+                .stream()
+                .filter(r -> r.isAvailableOnDate(date))
+                .toList();
     }
 
     public double getRoomPayment(Room room) {
-        double payment = 0;
-        for (Guest guest : guests) {
-            if (guest.getRoom() == room) {
-                payment += guest.getTotalPayment();
-            }
-        }
-        return payment;
+        return guests.stream()
+                .filter(guest -> guest.getRoom() == room)
+                .mapToDouble(Guest::getTotalPayment)
+                .sum();
     }
+
 
     public List<Guest> getLastThreeGuests(Room room) {
-        List<Guest> lastThreeGuests = new ArrayList<>();
-        for (Guest guest : guests) {
-            if (guest.getRoom() == room) {
-                lastThreeGuests.add(guest);
-                if (lastThreeGuests.size() >= 3) {
-                    break;
-                }
-            }
-        }
-        return lastThreeGuests;
+        return guests.stream()
+                .filter(guest -> guest.getRoom() == room)
+                .limit(3)
+                .collect(Collectors.toList());
     }
 
-    public List<GuestService> getGuestServicesSortedByPrice() {
-        List<GuestService> guestServices = new ArrayList<>();
-        for (Guest guest : guests) {
-            guestServices.addAll(guest.getServices());
-        }
-        guestServices.sort(Comparator.comparingDouble(GuestService::getPrice));
-        return guestServices;
+
+    private List<Service> getGuestServices() {
+        return guests.stream()
+                .flatMap(guest -> guest.getServices().stream())
+                .collect(Collectors.toList());
+    }
+    public List<Service> getGuestServicesSortedByPrice() {
+        return new ServicePriceSorting(getGuestServices()).sortItems();
     }
 
     public List<Service> getServicesSortedByPrice() {
-        List<Service> serviceList = new ArrayList<>(services.values());
-        serviceList.sort(Comparator.comparingDouble(Service::getPrice));
-        return serviceList;
+        return new ServicePriceSorting(services.values()).sortItems();
     }
 
     public Room getRoomDetails(int roomNumber) {
