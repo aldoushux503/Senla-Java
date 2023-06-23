@@ -17,6 +17,14 @@ public class Guest {
         this.services = new ArrayList<>();
     }
 
+    public double getTotalPayment() {
+        double payment = room.getPrice();
+        for (GuestService service : services) {
+            payment += service.getPrice();
+        }
+        return payment;
+    }
+
     public String getName() {
         return name;
     }
@@ -33,11 +41,19 @@ public class Guest {
         return services;
     }
 
-    public double getTotalPayment() {
-        double payment = room.getPrice();
-        for (GuestService service : services) {
-            payment += service.getPrice();
-        }
-        return payment;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public void setServices(List<GuestService> services) {
+        this.services = services;
     }
 }

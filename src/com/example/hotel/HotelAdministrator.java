@@ -49,6 +49,10 @@ public class HotelAdministrator {
         return new HashMap<>(rooms);
     }
 
+    public Room getRoom(Room room) {
+        return new Room(rooms.get(room.getRoomNumber()));
+    }
+
     public void setRooms(Map<Integer, Room> rooms) {
         this.rooms = new HashMap<>(rooms);
     }
@@ -57,10 +61,21 @@ public class HotelAdministrator {
         return new HashMap<>(services);
     }
 
+    public Service getService(Service service) {
+        return new Service(services.get(service.getServiceName()));
+    }
+
     public void setServices(Map<String, Service> services) {
         this.services = new HashMap<>(services);
     }
 
+    public List<Guest> getGuests() {
+        return new ArrayList<>(guests);
+    }
+
+    public void setGuests(List<Guest> guests) {
+        this.guests = new ArrayList<>(guests);
+    }
 
     public List<Room> getRoomsSortedByPrice() {
         return new RoomPriceSorting(rooms.values()).sortItems();
@@ -82,18 +97,15 @@ public class HotelAdministrator {
     }
 
     public List<Room> getAvailableRoomsSortedByPrice() {
-        List<Room> availableRooms = getAvailableRooms();
         return new RoomPriceSorting(getAvailableRooms()).sortItems();
     }
 
     public List<Room> getAvailableRoomsSortedByCapacity() {
-        List<Room> availableRooms = getAvailableRooms();
-        return new RoomCapacitySorting(availableRooms).sortItems();
+        return new RoomCapacitySorting(getAvailableRooms()).sortItems();
     }
 
     public List<Room> getAvailableRoomsSortedByStars() {
-        List<Room> availableRooms = getAvailableRooms();
-        return new RoomStarsSorting(availableRooms).sortItems();
+        return new RoomStarsSorting(getAvailableRooms()).sortItems();
     }
 
 
@@ -122,7 +134,7 @@ public class HotelAdministrator {
 
     public double getRoomPayment(Room room) {
         return guests.stream()
-                .filter(guest -> guest.getRoom() == room)
+                .filter(guest -> guest.getRoom().equals(room))
                 .mapToDouble(Guest::getTotalPayment)
                 .sum();
     }
