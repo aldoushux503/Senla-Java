@@ -49,10 +49,6 @@ public class HotelAdministrator {
         return new HashMap<>(rooms);
     }
 
-    public Room findRoom(Room room) {
-        return new Room(rooms.get(room.getRoomNumber()));
-    }
-
     public void setRooms(Map<Integer, Room> rooms) {
         this.rooms = new HashMap<>(rooms);
     }
@@ -61,7 +57,7 @@ public class HotelAdministrator {
         return new HashMap<>(services);
     }
 
-    public Service findService(Service service) {
+    public Service getServiceDetails(Service service) {
         return new Service(services.get(service.getServiceName()));
     }
 
@@ -148,13 +144,21 @@ public class HotelAdministrator {
     }
 
 
-    private List<Service> getGuestServices() {
+    private List<GuestService> getGuestServices() {
         return guests.stream()
                 .flatMap(guest -> guest.getServices().stream())
                 .collect(Collectors.toList());
     }
-    public List<Service> getGuestServicesSortedByPrice() {
-        return new ServicePriceSorting(getGuestServices()).sortItems();
+    public List<GuestService> getGuestServicesSortedByPrice() {
+        return new GuestServicePriceSorting(getGuestServices()).sortItems();
+    }
+
+    public List<GuestService> getGuestServicesSortedByDate() {
+        return new GuestServiceDateSorting(getGuestServices()).sortItems();
+    }
+
+    public List<Service> getServicesSortedByCategory() {
+        return new ServiceCategorySorting(services.values()).sortItems();
     }
 
     public List<Service> getServicesSortedByPrice() {
